@@ -10,6 +10,8 @@ IP=$(ifdata -pa eth0)
 LAST=$(echo $IP | cut -d . -f 4)
 MAC=$(ip addr show $(awk 'NR==3{print $1}' /proc/net/wireless | tr -d :) | awk '/ether/{print $2}')
 
+#instalar java JDK
+apt install -y default-jdk
 
 #instalar openfire
 wget https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.6.2_all.deb -O openfire4.6.2.deb
@@ -59,7 +61,7 @@ DB='openfire'
 
 sudo mysql -h localhost -u root << EOF
 create database $DB;
-grant all privileges on $DB.* to $MYSQL_USER@localhost identified by ''$MYSQL_PASSWORD''; 
+grant all privileges on $DB.* to $MYSQL_USER@localhost identified by '$MYSQL_PASSWORD'; 
 flush privileges;
 EOF
 
